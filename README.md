@@ -1397,3 +1397,4 @@ docker exec -it gitlab bash
 * https://github.com/gitlabhq/gitlab-recipes/blob/master/web-server/nginx/gitlab-ssl
 * https://github.com/jpetazzo/nsenter
 * https://jpetazzo.github.io/2014/03/23/lxc-attach-nsinit-nsenter-docker-0-9/
+
