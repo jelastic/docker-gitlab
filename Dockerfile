@@ -2,15 +2,15 @@ FROM ubuntu:xenial-20190222
 
 ARG BUILD_DATE
 ARG VCS_REF
-ARG VERSION=11.9.4
+ARG VERSION=11.10.4
 
 ENV GITLAB_VERSION=${VERSION} \
     RUBY_VERSION=2.5 \
-    GOLANG_VERSION=1.11.6 \
-    GITLAB_SHELL_VERSION=8.7.1 \
-    GITLAB_WORKHORSE_VERSION=8.3.3 \
+    GOLANG_VERSION=1.11.9 \
+    GITLAB_SHELL_VERSION=9.0.0 \
+    GITLAB_WORKHORSE_VERSION=8.5.2 \
     GITLAB_PAGES_VERSION=1.5.0 \
-    GITALY_SERVER_VERSION=1.27.1 \
+    GITALY_SERVER_VERSION=1.34.1 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
@@ -47,7 +47,7 @@ RUN apt-get update \
       git-core gnupg2 ruby${RUBY_VERSION} python2.7 python-docutils nodejs yarn gettext-base \
       libmysqlclient20 libpq5 zlib1g libyaml-0-2 libssl1.0.0 \
       libgdbm3 libreadline6 libncurses5 libffi6 \
-      libxml2 libxslt1.1 libcurl3 libicu55 libre2-dev tzdata unzip \
+      libxml2 libxslt1.1 libcurl3 libicu55 libre2-dev tzdata unzip libimage-exiftool-perl \
  && update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX \
  && locale-gen en_US.UTF-8 \
  && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales \

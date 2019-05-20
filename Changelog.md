@@ -3,6 +3,33 @@
 This file only reflects the changes that are made in this image. Please refer to the upstream GitLab [CHANGELOG](
 https://gitlab.com/gitlab-org/gitlab-ce/blob/master/CHANGELOG.md) for the list of changes in GitLab.
 
+**11.10.4**
+- gitlab: upgrade CE to v11.10.4
+
+**11.10.3**
+- gitlab: upgrade CE to v11.10.3
+
+**11.10.2**
+- gitlab: upgrade CE to v11.10.2
+
+**11.10.1**
+- gitlab: upgrade CE to v11.10.1
+
+**11.10.0**
+- gitlab: upgrade CE to v11.10.0
+
+**11.9.8**
+- gitlab: upgrade CE to v11.9.8
+
+**11.9.7**
+- gitlab: upgrade CE to v11.9.7
+
+**11.9.6**
+- gitlab: upgrade CE to v11.9.6
+
+**11.9.5**
+- gitlab: upgrade CE to v11.9.5
+
 **11.9.4**
 - gitlab: upgrade CE to v11.9.4
 - Update gitlab-workhorse to 8.3.3
