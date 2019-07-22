@@ -72,7 +72,7 @@ version: '2'
 services:
   redis:
     restart: always
-    image: sameersbn/redis:4.0.9-1
+    image: sameersbn/redis:4.0.9-2
     command:
     - --loglevel warning
     volumes:
@@ -80,7 +80,7 @@ services:
 
   postgresql:
     restart: always
-    image: sameersbn/postgresql:10
+    image: sameersbn/postgresql:10-2
     volumes:
     - /tmp/docker/gitlab/postgresql:/var/lib/postgresql:Z
     environment:
