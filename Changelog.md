@@ -3,6 +3,16 @@
 This file only reflects the changes that are made in this image. Please refer to the upstream GitLab [CHANGELOG](
 https://gitlab.com/gitlab-org/gitlab-ce/blob/master/CHANGELOG.md) for the list of changes in GitLab.
 
+**12.1.2**
+- gitlab: upgrade CE to v12.1.2
+
+**12.1.1**
+- gitlab: upgrade CE to v12.1.1
+
+**12.1.0**
+- gitlab: upgrade CE to v12.1.0
+- Removed MySQL related information and packages. GitLab v12.1.X or greater requires only PostgreSQL. Do an Migration before upgrading to v12.1.X. For more Information have a look at the [Migration Guide](https://docs.gitlab.com/ce/update/mysql_to_postgresql.html) 
+
 **12.0.4**
 - gitlab: upgrade CE to v12.0.4
 

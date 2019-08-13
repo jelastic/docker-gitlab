@@ -1,16 +1,16 @@
-FROM ubuntu:xenial-20190222
+FROM ubuntu:xenial-20190720
 
 ARG BUILD_DATE
 ARG VCS_REF
-ARG VERSION=12.0.4
+ARG VERSION=12.1.2
 
 ENV GITLAB_VERSION=${VERSION} \
     RUBY_VERSION=2.6 \
     GOLANG_VERSION=1.12.6 \
     GITLAB_SHELL_VERSION=9.3.0 \
     GITLAB_WORKHORSE_VERSION=8.7.0 \
-    GITLAB_PAGES_VERSION=1.6.1 \
-    GITALY_SERVER_VERSION=1.47.0 \
+    GITLAB_PAGES_VERSION=1.7.0 \
+    GITALY_SERVER_VERSION=1.53.0 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
@@ -43,9 +43,9 @@ RUN apt-get update \
  && apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
       sudo supervisor logrotate locales curl \
-      nginx openssh-server mysql-client postgresql-client redis-tools \
+      nginx openssh-server postgresql-client-10 redis-tools \
       git-core gnupg2 ruby${RUBY_VERSION} python3 python3-docutils nodejs yarn gettext-base \
-      libmysqlclient20 libpq5 zlib1g libyaml-0-2 libssl1.0.0 \
+      libpq5 zlib1g libyaml-0-2 libssl1.0.0 \
       libgdbm3 libreadline6 libncurses5 libffi6 \
       libxml2 libxslt1.1 libcurl3 libicu55 libre2-dev tzdata unzip libimage-exiftool-perl \
  && update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX \
