@@ -271,7 +271,7 @@ production: &base
 
   ## Sidekiq
   sidekiq:
-    log_format: {{GITLAB_SIDEKIQ_LOG_FORMAT}} # (json is also supported)
+    log_format: {{GITLAB_SIDEKIQ_LOG_FORMAT}} # (default is the original format)
 
   ## Auxiliary jobs
   # Periodically executed jobs, to self-heal GitLab, do external synchronizations, etc.
@@ -309,6 +309,13 @@ production: &base
     key: {{GITLAB_REGISTRY_KEY_PATH}}
     path: {{GITLAB_REGISTRY_DIR}}
     issuer: {{GITLAB_REGISTRY_ISSUER}}
+
+  ## Error Reporting and Logging with Sentry
+  sentry:
+    enabled: {{SENTRY_ENABLED}}
+    dsn: {{SENTRY_DSN}}
+    clientside_dsn: {{SENTRY_CLIENTSIDE_DSN}}
+    environment: '{{SENTRY_ENVIRONMENT}}' # e.g. development, staging, production
 
   #
   # 2. GitLab CI settings
@@ -551,7 +558,8 @@ production: &base
           args: {
             client_id: '{{OAUTH_AUTH0_CLIENT_ID}}',
             client_secret: '{{OAUTH_AUTH0_CLIENT_SECRET}}',
-            namespace: '{{OAUTH_AUTH0_DOMAIN}}' } }
+            domain: '{{OAUTH_AUTH0_DOMAIN}}',
+            scope: '{{OAUTH_AUTH0_SCOPE}}'  } }
       - { name: 'azure_oauth2',
           args: {
             client_id: '{{OAUTH_AZURE_API_KEY}}',
