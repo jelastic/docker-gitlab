@@ -69,9 +69,9 @@
 
 Dockerfile to build a [GitLab](https://about.gitlab.com/) image for the [Docker](https://www.docker.com/products/docker-engine) opensource container platform.
 
-GitLab CE is set up in the Docker image using the [install from source](https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/install/installation.md) method as documented in the the official GitLab documentation.
+GitLab CE is set up in the Docker image using the [install from source](https://docs.gitlab.com/ce/install/installation.html) method as documented in the the official GitLab documentation.
 
-For other methods to install GitLab please refer to the [Official GitLab Installation Guide](https://about.gitlab.com/installation/) which includes a [GitLab image for Docker](https://gitlab.com/gitlab-org/gitlab-ce/tree/master/docker).
+For other methods to install GitLab please refer to the [Official GitLab Installation Guide](https://about.gitlab.com/install/) which includes a [GitLab image for Docker](https://docs.gitlab.com/omnibus/docker/).
 
 # Contributing
 
@@ -528,8 +528,8 @@ This is simply done by adding the servers certificate into their list of trusted
 Again, this is a client side configuration which means that everyone who is going to communicate with the server should perform this configuration on their machine. In short, distribute the `gitlab.crt` file among your developers and ask them to add it to their list of trusted ssl certificates. Failure to do so will result in errors that look like this:
 
 ```bash
-git clone https://git.local.host/gitlab-ce.git
-fatal: unable to access 'https://git.local.host/gitlab-ce.git': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
+git clone https://git.local.host/gitlab-foss.git
+fatal: unable to access 'https://git.local.host/gitlab-foss.git': server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none
 ```
 
 You can do the same at the web browser. Instructions for installing the root certificate for firefox can be found [here](http://portal.threatpulse.com/docs/sol/Content/03Solutions/ManagePolicy/SSL/ssl_firefox_cert_ta.htm). You will find similar options chrome, just make sure you install the certificate under the authorities tab of the certificate manager dialog.
@@ -772,6 +772,9 @@ Below is the complete list of available options that can be used to customize yo
 | `GITLAB_EMAIL_REPLY_TO` | The reply-to address of emails sent out by GitLab. Defaults to value of `GITLAB_EMAIL`, else defaults to `noreply@example.com`. |
 | `GITLAB_EMAIL_SUBJECT_SUFFIX` | The e-mail subject suffix used in e-mails sent by GitLab. No defaults. |
 | `GITLAB_EMAIL_ENABLED` | Enable or disable gitlab mailer. Defaults to the `SMTP_ENABLED` configuration. |
+| `GITLAB_EMAIL_SMIME_ENABLE` | Enable or disable email S/MIME signing. Defaults is `false`. |
+| `GITLAB_EMAIL_SMIME_KEY_FILE` | Specifies the path to a S/MIME private key file in PEM format, unencrypted. Defaults to ``. |
+| `GITLAB_EMAIL_SMIME_CERT_FILE` | Specifies the path to a S/MIME public certificate key in PEM format. Defaults to ``. |
 | `GITLAB_DEFAULT_THEME` | Default theme ID, by default 2. (1 - Indigo, 2 - Dark, 3 - Light, 4 - Blue, 5 - Green, 6 - Light Indigo, 7 - Light Blue, 8 - Light Green, 9 - Red, 10 - Light Red) |
 | `GITLAB_INCOMING_EMAIL_ADDRESS` | The incoming email address for reply by email. Defaults to the value of `IMAP_USER`, else defaults to `reply@example.com`. Please read the [reply by email](http://doc.gitlab.com/ce/incoming_email/README.html) documentation to currently set this parameter. |
 | `GITLAB_INCOMING_EMAIL_ENABLED` | Enable or disable gitlab reply by email feature. Defaults to the value of `IMAP_ENABLED`. |
@@ -1072,7 +1075,13 @@ and then both docker-compose and Docker Swarm can import them into your gitlab c
 
 On startup, the gitlab container will source env vars from a config file labeled `gitlab-config`, and then a secrets file labeled `gitlab-secrets` (both mounted in the default locations).
 
-See the exmample `config/docker-swarm/docker-compose.yml` file, and the example `gitlab.config` and `gitlab.secrets` file.
+See the example [`contrib/docker-swarm/docker-compose.yml`](./contrib/docker-swarm/docker-compose.yml) file, and the
+example `gitlab.configs` and `gitlab.secrets` file.
+You may as well choose file names other than the example source files (`gitlab.configs` and `gitlab.secrets`) and update
+the `file: ./gitlab.configs` and `file: ./gitlab.secrets` references accordingly. But do not alter the config
+keys [`gitlab-configs`](contrib/docker-swarm/docker-compose.yml#L158) and
+[`gitlab-secrets`](contrib/docker-swarm/docker-compose.yml#L162) as they are currently
+[hardcoded](./assets/runtime/functions#L4:L9) and thus must be kept as in the example.
 
 If you're not using one of these files, then don't include its entry in the docker-compose file.
 
