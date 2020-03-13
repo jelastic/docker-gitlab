@@ -15,105 +15,58 @@ services:
     volumes:
     - postgresql-data:/var/lib/postgresql:Z
     environment:
-    - DB_USER=${DB_USER}
-    - DB_PASS=${DB_PASSWORD}
+    - DB_USER=gitlab
+    - DB_PASS=password
     - DB_NAME=gitlabhq_production
     - DB_EXTENSION=pg_trgm
-    
-  registry:
-    restart: always
-    image: registry:2.4.1
-    ports:
-    - "${REGISTRY_PORT}:5000"
-    volumes:
-    - /srv/docker/gitlab/gitlab/shared/registry:/registry
-    - /srv/docker/gitlab/certs:/certs
-    environment:
-    - REGISTRY_LOG_LEVEL=info
-    - REGISTRY_AUTH_TOKEN_REALM=https://${GITLAB_HOST}:${HTTPS_PORT}/jwt/auth
-    - REGISTRY_AUTH_TOKEN_SERVICE=container_registry
-    - REGISTRY_AUTH_TOKEN_ISSUER=gitlab-issuer
-    - REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/auth.crt
-
-    - REGISTRY_HTTP_SECRET=${HTTP_SECRET}
-    - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/auth.crt
-    - REGISTRY_HTTP_TLS_KEY=/certs/auth.key
-
-    - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/registry
-    - REGISTRY_STORAGE_DELETE_ENABLED=true
 
   gitlab:
     restart: always
-    image: sameersbn/gitlab:12.7.7
+    image: nuberabe/docker-gitlab:12.7.0
     depends_on:
     - redis
     - postgresql
     ports:
-    - "80:80"
-    - "${HTTPS_PORT}:443"
-    - "${SSH_PORT}:22"
+    - "10080:80"
+    - "10022:22"
     volumes:
     - gitlab-data:/home/git/data:Z
-    - /srv/docker/gitlab/logs:/var/log/gitlab
-    - /srv/docker/gitlab/certs:/certs
-    - /srv/docker/gitlab/certs/ca.crt:/etc/ssl/certs/ca.crt
-    - ~/gitlab/assets/runtime/config/nginx/gitlab-registry:/etc/docker-gitlab/runtime/config/nginx/gitlab-registry
     environment:
-    - GITLAB_REGISTRY_ENABLED=true
-    - GITLAB_REGISTRY_HOST=${REGISTRY_HOST}
-    - GITLAB_REGISTRY_PORT=${REGISTRY_PORT}
-    - GITLAB_REGISTRY_API_URL=https://${REGISTRY_HOST}:${REGISTRY_PORT}
-    - GITLAB_REGISTRY_ISSUER=gitlab-issuer
-
-    - GITLAB_HTTPS=true
-    - SSL_SELF_SIGNED=true
-
-    - SSL_KEY_PATH=/certs/auth.key
-    - SSL_CERTIFICATE_PATH=/certs/auth.crt
-    - SSL_DHPARAM_PATH=/certs/dhparam.pem
-
-    - GITLAB_REGISTRY_CERT_PATH=/certs/auth.crt
-    - GITLAB_REGISTRY_KEY_PATH=/certs/auth.key
-
-    - SSL_REGISTRY_KEY_PATH=/certs/auth.key
-    - SSL_REGISTRY_CERT_PATH=/certs/auth.crt
-
     - DEBUG=false
 
     - DB_ADAPTER=postgresql
     - DB_HOST=postgresql
     - DB_PORT=5432
-    - DB_USER=${DB_USER}
-    - DB_PASS=${DB_PASSWORD}
+    - DB_USER=gitlab
+    - DB_PASS=password
     - DB_NAME=gitlabhq_production
 
     - REDIS_HOST=redis
     - REDIS_PORT=6379
 
-    - TZ=UTC
-    - GITLAB_TIMEZONE=UTC
+    - TZ=Asia/Kolkata
+    - GITLAB_TIMEZONE=Kolkata
 
-    - GITLAB_HOST=${GITLAB_HOST}
-    - GITLAB_PORT=${HTTPS_PORT}
+    - GITLAB_HTTPS=false
+    - SSL_SELF_SIGNED=false
 
-    - GITLAB_SSH_PORT=${SSH_PORT}
+    - GITLAB_HOST='<your-ip-address>'
+    - GITLAB_PORT=10080
+    - GITLAB_SSH_PORT=10022
     - GITLAB_RELATIVE_URL_ROOT=
+    - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alphanumeric-string
+    - GITLAB_SECRETS_SECRET_KEY_BASE=long-and-random-alphanumeric-string
+    - GITLAB_SECRETS_OTP_KEY_BASE=long-and-random-alphanumeric-string
 
-    - GITLAB_SECRETS_DB_KEY_BASE=${GITLAB_SECRETS_BASE}
-    - GITLAB_SECRETS_SECRET_KEY_BASE=${GITLAB_SECRETS_BASE}
-    - GITLAB_SECRETS_OTP_KEY_BASE=${GITLAB_SECRETS_BASE}
-
-    - GITLAB_SHARED_RUNNERS_REGISTRATION_TOKEN=${RUNNER_TOKEN}
-    - GITLAB_ROOT_PASSWORD=${ROOT_PASSWORD}
-
-    - GITLAB_ROOT_EMAIL=${USER_EMAIL}
+    - GITLAB_ROOT_PASSWORD=<root-password>
+    - GITLAB_ROOT_EMAIL=
 
     - GITLAB_NOTIFY_ON_BROKEN_BUILDS=true
     - GITLAB_NOTIFY_PUSHER=false
 
-    - GITLAB_EMAIL=${USER_EMAIL}
-    - GITLAB_EMAIL_REPLY_TO=${USER_EMAIL}
-    - GITLAB_INCOMING_EMAIL_ADDRESS=${USER_EMAIL}
+    - GITLAB_EMAIL=notifications@example.com
+    - GITLAB_EMAIL_REPLY_TO=noreply@example.com
+    - GITLAB_INCOMING_EMAIL_ADDRESS=reply@example.com
 
     - GITLAB_BACKUP_SCHEDULE=daily
     - GITLAB_BACKUP_TIME=01:00
@@ -135,13 +88,13 @@ services:
     - IMAP_SSL=true
     - IMAP_STARTTLS=false
 
-    - OAUTH_ENABLED=false
-    - OAUTH_AUTO_SIGN_IN_WITH_PROVIDER=
-    - OAUTH_ALLOW_SSO=
-    - OAUTH_BLOCK_AUTO_CREATED_USERS=true
+    - OAUTH_ENABLED=true
+    - OAUTH_AUTO_SIGN_IN_WITH_PROVIDER=Keycloak
+    - OAUTH_ALLOW_SSO=Keycloak
+    - OAUTH_BLOCK_AUTO_CREATED_USERS=false
     - OAUTH_AUTO_LINK_LDAP_USER=false
     - OAUTH_AUTO_LINK_SAML_USER=false
-    - OAUTH_EXTERNAL_PROVIDERS=
+    - OAUTH_EXTERNAL_PROVIDERS=Keycloak
 
     - OAUTH_CAS3_LABEL=cas3
     - OAUTH_CAS3_SERVER=
@@ -197,6 +150,29 @@ services:
     - OAUTH_AZURE_API_KEY=
     - OAUTH_AZURE_API_SECRET=
     - OAUTH_AZURE_TENANT_ID=
+
+    - OAUTH2_GENERIC_APP_ID=git
+    - OAUTH2_GENERIC_APP_SECRET=<your-client-secret>
+    - OAUTH2_GENERIC_CLIENT_SITE=http://<your-ip-address>:10081
+    - OAUTH2_GENERIC_CLIENT_USER_INFO_URL=http://<your-ip-address>:10081/auth/realms/master/protocol/openid-connect/userinfo
+    - OAUTH2_GENERIC_CLIENT_AUTHORIZE_URL=http://<your-ip-address>:10081/auth/realms/master/protocol/openid-connect/auth
+    - OAUTH2_GENERIC_CLIENT_TOKEN_URL=http://<your-ip-address>:10081/auth/realms/master/protocol/openid-connect/token
+    - OAUTH2_GENERIC_CLIENT_END_SESSION_ENDPOINT=http://<your-ip-address>:10081/auth/realms/master/protocol/openid-connect/logout
+    - OAUTH2_GENERIC_ID_PATH=sub
+    - OAUTH2_GENERIC_USER_UID=sub
+    - OAUTH2_GENERIC_USER_NAME=preferred_username
+    - OAUTH2_GENERIC_USER_EMAIL=email
+    - OAUTH2_GENERIC_NAME=Keycloak
+
+  keycloak:
+    restart: always
+    image: jboss/keycloak:8.0.1
+    ports:
+    - "10081:8080"
+    environment:
+    - DEBUG=false
+    - KEYCLOAK_PASSWORD=admin
+    - KEYCLOAK_USER=admin
 
 volumes:
   redis-data:
