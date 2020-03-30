@@ -3,10 +3,42 @@
 This file only reflects the changes that are made in this image. Please refer to the upstream GitLab [CHANGELOG](
 https://gitlab.com/gitlab-org/gitlab-foss/blob/master/CHANGELOG.md) for the list of changes in GitLab.
 
-**12.7.8*
+**12.8.8**
+- gitlab: upgrade CE to v12.8.8
+
+**12.8.7**
+- gitlab: upgrade CE to v12.8.7
+
+**12.8.6**
+- gitlab: upgrade CE to v12.8.6
+
+**12.8.5**
+- gitlab: upgrade CE to v12.8.5
+
+**12.8.4**
+- gitlab: upgrade CE to v12.8.4
+
+**12.8.3**
+- gitlab: upgrade CE to v12.8.3
+
+**12.8.2**
+- gitlab: upgrade CE to v12.8.2
+
+**12.8.1**
+- gitlab: upgrade CE to v12.8.1
+
+**12.8.0**
+- gitlab: upgrade CE to v12.8.0
+- fix: ArgumentError: 'import/{{oauth2_generic_name}}' is not supported [#2101](https://github.com/sameersbn/docker-gitlab/issues/2101)
+
+**12.7.8**
 - Upgrade GitLab CE to 12.7.8
 
-**12.7.7*
+**12.7.7**
+- Upgrade GitLab CE to 12.7.7
+- Add Generic OAuth Provider PR#2070
+
+**12.7.7**
 - Upgrade GitLab CE to 12.7.7
 
 **12.7.6**
