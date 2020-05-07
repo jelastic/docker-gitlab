@@ -564,12 +564,12 @@ gitlab_configure_oauth_bitbucket() {
 }
 
 gitlab_configure_oauth_saml_attribute_statements() {
-  if [[ -n ${OAUTH_SAML_ATTRIBUTE_STATEMENTS_EMAIL} && \
-        -n ${OAUTH_SAML_ATTRIBUTE_STATEMENTS_NAME} ]]; then
+  if [[ -n ${OAUTH_SAML_ATTRIBUTE_STATEMENTS_EMAIL} ]]; then
     echo "Configuring gitlab::oauth::saml::attribute_statements..."
     update_template ${GITLAB_CONFIG} \
       OAUTH_SAML_ATTRIBUTE_STATEMENTS_EMAIL \
       OAUTH_SAML_ATTRIBUTE_STATEMENTS_NAME \
+      OAUTH_SAML_ATTRIBUTE_STATEMENTS_USERNAME \
       OAUTH_SAML_ATTRIBUTE_STATEMENTS_FIRST_NAME \
       OAUTH_SAML_ATTRIBUTE_STATEMENTS_LAST_NAME
     # Remove undefined optional attributes
@@ -1316,7 +1316,7 @@ map_uidgid() {
     echo "Mapping UID and GID for ${GITLAB_USER}:${GITLAB_USER} to $USERMAP_UID:$USERMAP_GID"
     groupmod -o -g ${USERMAP_GID} ${GITLAB_USER}
     sed -i -e "s|:${USERMAP_ORIG_UID}:${USERMAP_GID}:|:${USERMAP_UID}:${USERMAP_GID}:|" /etc/passwd
-    find ${GITLAB_HOME} -path ${GITLAB_DATA_DIR}/\* -prune -o -print0 | xargs -0 chown -h ${GITLAB_USER}:
+    find ${GITLAB_HOME} -path ${GITLAB_DATA_DIR}/\* \( ! -uid ${USERMAP_ORIG_UID} -o ! -gid ${USERMAP_ORIG_GID} \) -print0 | xargs -0 chown -h ${GITLAB_USER}: ${GITLAB_HOME}
   fi
 }
 
@@ -1347,6 +1347,10 @@ initialize_logdir() {
   mkdir -p ${GITLAB_LOG_DIR}/gitlab-shell
   chmod -R 0755 ${GITLAB_LOG_DIR}/gitlab-shell
   chown -R ${GITLAB_USER}: ${GITLAB_LOG_DIR}/gitlab-shell
+
+  mkdir -p ${GITLAB_LOG_DIR}/gitaly
+  chmod -R 0755 ${GITLAB_LOG_DIR}/gitaly
+  chown -R ${GITLAB_USER}: ${GITLAB_LOG_DIR}/gitaly
 }
 
 initialize_datadir() {

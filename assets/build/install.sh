@@ -137,14 +137,6 @@ rm -rf ${GITLAB_GITALY_BUILD_DIR}
 # remove go
 rm -rf ${GITLAB_BUILD_DIR}/go${GOLANG_VERSION}.linux-amd64.tar.gz ${GOROOT}
 
-# Fix for rebase in forks 
-echo "Linking $(command -v gitaly-ssh) to /"
-ln -s "$(command -v gitaly-ssh)" /
-
-# Fix for gitaly-hooks
-echo "Linking $(command -v gitaly-hooks) to /"
-ln -s "$(command -v gitaly-hooks)" /
-
 # remove HSTS config from the default headers, we configure it in nginx
 exec_as_git sed -i "/headers\['Strict-Transport-Security'\]/d" ${GITLAB_INSTALL_DIR}/app/controllers/application_controller.rb
 
@@ -264,6 +256,19 @@ EOF
 # configure gitlab-shell log rotation
 cat > /etc/logrotate.d/gitlab-shell <<EOF
 ${GITLAB_LOG_DIR}/gitlab-shell/*.log {
+  weekly
+  missingok
+  rotate 52
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}
+EOF
+
+# configure gitlab log rotation
+cat > /etc/logrotate.d/gitaly <<EOF
+${GITLAB_LOG_DIR}/gitaly/*.log {
   weekly
   missingok
   rotate 52
