@@ -275,18 +275,12 @@ gitlab_configure_puma() {
 
   update_template ${GITLAB_PUMA_CONFIG} \
     GITLAB_INSTALL_DIR \
-    GITLAB_INSTALL_DIR \
-    GITLAB_INSTALL_DIR \
-    GITLAB_INSTALL_DIR \
     PUMA_THREADS_MIN \
     PUMA_THREADS_MAX \
     PUMA_WORKERS \
     PUMA_PER_WORKER_MAX_MEMORY_MB \
     PUMA_MASTER_MAX_MEMORY_MB \
-    GITLAB_INSTALL_DIR \
-    GITLAB_INSTALL_DIR \
-    PUMA_TIMEOUT \
-    GITLAB_INSTALL_DIR
+    PUMA_TIMEOUT
 }
 
 gitlab_configure_relative_url() {
@@ -1233,6 +1227,7 @@ nginx_configure_gitlab_real_ip() {
 nginx_configure_gitlab() {
   echo "Configuring nginx::gitlab..."
   update_template ${GITLAB_NGINX_CONFIG} \
+    GITLAB_HOME \
     GITLAB_INSTALL_DIR \
     GITLAB_LOG_DIR \
     GITLAB_HOST \
