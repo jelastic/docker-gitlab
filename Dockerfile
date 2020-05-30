@@ -1,14 +1,14 @@
 FROM ubuntu:bionic-20200403
 
-ARG VERSION=13.0.0
+ARG VERSION=13.0.3
 
 ENV GITLAB_VERSION=${VERSION} \
     RUBY_VERSION=2.6 \
     GOLANG_VERSION=1.13.10 \
     GITLAB_SHELL_VERSION=13.2.0 \
-    GITLAB_WORKHORSE_VERSION=8.31.0 \
+    GITLAB_WORKHORSE_VERSION=8.31.1 \
     GITLAB_PAGES_VERSION=1.18.0 \
-    GITALY_SERVER_VERSION=13.0.0 \
+    GITALY_SERVER_VERSION=13.0.3 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
@@ -43,7 +43,7 @@ RUN set -ex && \
  && apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
       sudo supervisor logrotate locales curl \
-      nginx openssh-server postgresql-client-10 postgresql-contrib-10 redis-tools \
+      nginx openssh-server postgresql-client-12 postgresql-contrib-12 redis-tools \
       git-core ruby${RUBY_VERSION} python3 python3-docutils nodejs yarn gettext-base graphicsmagick \
       libpq5 zlib1g libyaml-0-2 libssl1.0.0 \
       libgdbm5 libreadline7 libncurses5 libffi6 \

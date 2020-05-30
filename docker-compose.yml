@@ -1,4 +1,4 @@
-version: '2'
+version: '2.3'
 
 services:
   redis:
@@ -44,7 +44,7 @@ services:
 
   gitlab:
     restart: always
-    image: sameersbn/gitlab:13.0.0
+    image: sameersbn/gitlab:13.0.3
     depends_on:
     - redis
     - postgresql
@@ -58,6 +58,12 @@ services:
     - /srv/docker/gitlab/certs:/certs
     - /srv/docker/gitlab/certs/ca.crt:/etc/ssl/certs/ca.crt
     - ~/gitlab/assets/runtime/config/nginx/gitlab-registry:/etc/docker-gitlab/runtime/config/nginx/gitlab-registry
+    healthcheck:
+      test: ["CMD", "/usr/local/sbin/healthcheck"]
+      interval: 5m
+      timeout: 10s
+      retries: 3
+      start_period: 5m
     environment:
     - GITLAB_REGISTRY_ENABLED=true
     - GITLAB_REGISTRY_HOST=${REGISTRY_HOST}
