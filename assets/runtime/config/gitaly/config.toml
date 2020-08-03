@@ -91,3 +91,8 @@ dir = "{{GITLAB_SHELL_INSTALL_DIR}}"
 # [[concurrency]]
 # rpc = "/gitaly.RepositoryService/GarbageCollect"
 # max_per_repo = 1
+
+[gitlab]
+secret_file = "/home/git/gitlab-shell/.gitlab_shell_secret"
+url = "http://localhost:8181"
+
