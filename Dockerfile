@@ -1,14 +1,14 @@
 FROM ubuntu:bionic-20200921
 
-ARG VERSION=13.5.3
+ARG VERSION=13.6.0
 
 ENV GITLAB_VERSION=${VERSION} \
-    RUBY_VERSION=2.6 \
-    GOLANG_VERSION=1.15.3 \
-    GITLAB_SHELL_VERSION=13.11.0 \
-    GITLAB_WORKHORSE_VERSION=8.51.0 \
-    GITLAB_PAGES_VERSION=1.28.0 \
-    GITALY_SERVER_VERSION=13.5.3 \
+    RUBY_VERSION=2.7 \
+    GOLANG_VERSION=1.15.5 \
+    GITLAB_SHELL_VERSION=13.13.0 \
+    GITLAB_WORKHORSE_VERSION=8.54.0 \
+    GITLAB_PAGES_VERSION=1.30.0 \
+    GITALY_SERVER_VERSION=13.6.0 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
@@ -51,7 +51,7 @@ RUN set -ex && \
  && update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX \
  && locale-gen en_US.UTF-8 \
  && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales \
- && gem install --no-document bundler -v 1.17.3 \
+ && gem install --no-document bundler -v 2.1.4 \
  && rm -rf /var/lib/apt/lists/*
 
 COPY assets/build/ ${GITLAB_BUILD_DIR}/
