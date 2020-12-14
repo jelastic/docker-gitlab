@@ -1,14 +1,14 @@
 FROM ubuntu:bionic-20200921
 
-ARG VERSION=13.6.1
+ARG VERSION=13.6.2
 
 ENV GITLAB_VERSION=${VERSION} \
     RUBY_VERSION=2.7 \
-    GOLANG_VERSION=1.15.5 \
+    GOLANG_VERSION=1.15.6 \
     GITLAB_SHELL_VERSION=13.13.0 \
     GITLAB_WORKHORSE_VERSION=8.54.0 \
     GITLAB_PAGES_VERSION=1.30.0 \
-    GITALY_SERVER_VERSION=13.6.1 \
+    GITALY_SERVER_VERSION=13.6.2 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
@@ -25,7 +25,9 @@ ENV GITLAB_INSTALL_DIR="${GITLAB_HOME}/gitlab" \
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-      wget ca-certificates apt-transport-https gnupg2
+    wget ca-certificates apt-transport-https gnupg2 \
+ && rm -rf /var/lib/apt/lists/*
+
 RUN set -ex && \
  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E1DD270288B4E6030699E45FA1715D88E1DF1F24 \
  && echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu bionic main" >> /etc/apt/sources.list \
