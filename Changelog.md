@@ -3,6 +3,30 @@
 This file only reflects the changes that are made in this image. Please refer to the upstream GitLab [CHANGELOG](
 https://gitlab.com/gitlab-org/gitlab-foss/blob/master/CHANGELOG.md) for the list of changes in GitLab.
 
+**13.9.3**
+- gitlab: upgrade CE to v13.9.3
+- gitaly: upgrade to v13.9.3
+- gitlab-shell: upgrade to v13.17.0
+
+**13.9.2**
+- gitlab: upgrade CE to v13.9.2
+- gitaly: upgrade to v13.9.2
+- gitlab-workhorse: upgrade to v8.63.2
+
+
+**13.9.1**
+- gitlab: upgrade CE to v13.9.1
+- gitaly: upgrade to v13.9.1
+
+
+**13.9.0**
+- gitlab: upgrade CE to v13.9.0
+- gitaly: upgrade to v13.9.0
+- gitlab-shell: upgrade to v13.16.1
+- gitlab-pages: upgrade to v1.35.0
+- gitlab-workhorse: upgrade to v8.63.0
+- golang: upgrade to v1.16
+
 **13.8.4**
 - added `SSL_PROTOCOLS` option to change protocols of the nginx
 - added `SSL_REGISTRY_CIPHERS`
