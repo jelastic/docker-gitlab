@@ -2,6 +2,27 @@
 
 This file only reflects the changes that are made in this image. Please refer to the upstream GitLab [CHANGELOG](https://gitlab.com/gitlab-org/gitlab-foss/blob/master/CHANGELOG.md) for the list of changes in GitLab.
 
+**14.5.2**
+- gitlab: upgrade CE to v14.5.2
+- gitaly: upgrade to v14.5.2
+- golang: upgrade to v1.17.5
+
+**14.5.1**
+- gitlab: upgrade CE to v14.5.1
+- gitaly: upgrade to v14.5.1
+- gitlab-shell: v13.22.1
+
+**14.5.0**
+- gitlab: upgrade CE to v14.5.0
+- gitaly: upgrade to v14.5.0
+- gitlab-pages: upgrade to v1.48.0
+- gitlab-shell: v13.22.0
+
+**14.4.4**
+- gitlab: upgrade CE to v14.4.4
+- gitaly: upgrade to v14.4.4
+- ruby: upgrade to v2.7.5
+
 **14.4.3**
 - gitlab: upgrade CE to v14.4.3
 - gitaly: upgrade to v14.4.3
