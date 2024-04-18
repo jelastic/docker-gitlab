@@ -1,4 +1,4 @@
-# sameersbn/gitlab:16.10.0
+# sameersbn/gitlab:16.10.2
 
 [![CircleCI](https://circleci.com/gh/sameersbn/docker-gitlab/tree/master.svg?style=svg)](https://circleci.com/gh/sameersbn/docker-gitlab/tree/master)
 
@@ -50,6 +50,7 @@
     - [External Issue Trackers](#external-issue-trackers)
     - [Host UID / GID Mapping](#host-uid--gid-mapping)
     - [Piwik](#piwik)
+    - [Feature flags](#feature-flags)
     - [Exposing ssh port in dockerized gitlab-ce](docs/exposing-ssh-port.md)
     - [Available Configuration Parameters](#available-configuration-parameters)
 - [Maintenance](#maintenance)
@@ -125,7 +126,7 @@ Your docker host needs to have 1GB or more of available RAM to run GitLab. Pleas
 Automated builds of the image are available on [Dockerhub](https://hub.docker.com/r/sameersbn/gitlab) and is the recommended method of installation.
 
 ```bash
-docker pull sameersbn/gitlab:16.10.0
+docker pull sameersbn/gitlab:16.10.2
 ```
 
 You can also pull the `latest` tag which is built from the repository *HEAD*
@@ -194,7 +195,7 @@ docker run --name gitlab -d \
     --env 'GITLAB_SECRETS_SECRET_KEY_BASE=long-and-random-alpha-numeric-string' \
     --env 'GITLAB_SECRETS_OTP_KEY_BASE=long-and-random-alpha-numeric-string' \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 *Please refer to [Available Configuration Parameters](#available-configuration-parameters) to understand `GITLAB_PORT` and other configuration options*
@@ -229,7 +230,7 @@ Volumes can be mounted in docker by specifying the `-v` option in the docker run
 ```bash
 docker run --name gitlab -d \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 ### Database
@@ -287,7 +288,7 @@ docker run --name gitlab -d \
     --env 'DB_NAME=gitlabhq_production' \
     --env 'DB_USER=gitlab' --env 'DB_PASS=password' \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 ##### Linking to PostgreSQL Container
@@ -331,7 +332,7 @@ We are now ready to start the GitLab application.
 ```bash
 docker run --name gitlab -d --link gitlab-postgresql:postgresql \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 Here the image will also automatically fetch the `DB_NAME`, `DB_USER` and `DB_PASS` variables from the postgresql container as they are specified in the `docker run` command for the postgresql container. This is made possible using the magic of docker links and works with the following images:
@@ -370,7 +371,7 @@ The image can be configured to use an external redis server. The configuration s
 ```bash
 docker run --name gitlab -it --rm \
     --env 'REDIS_HOST=192.168.1.100' --env 'REDIS_PORT=6379' \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 #### Linking to Redis Container
@@ -397,7 +398,7 @@ We are now ready to start the GitLab application.
 
 ```bash
 docker run --name gitlab -d --link gitlab-redis:redisio \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 #### Mail
@@ -410,7 +411,7 @@ If you are using Gmail then all you need to do is:
 docker run --name gitlab -d \
     --env 'SMTP_USER=USER@gmail.com' --env 'SMTP_PASS=PASSWORD' \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 Please refer the [Available Configuration Parameters](#available-configuration-parameters) section for the list of SMTP parameters that can be specified.
@@ -430,7 +431,7 @@ docker run --name gitlab -d \
     --env 'IMAP_USER=USER@gmail.com' --env 'IMAP_PASS=PASSWORD' \
     --env 'GITLAB_INCOMING_EMAIL_ADDRESS=USER+%{key}@gmail.com' \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 Please refer the [Available Configuration Parameters](#available-configuration-parameters) section for the list of IMAP parameters that can be specified.
@@ -514,7 +515,7 @@ docker run --name gitlab -d \
     --env 'GITLAB_SSH_PORT=10022' --env 'GITLAB_PORT=10443' \
     --env 'GITLAB_HTTPS=true' --env 'SSL_SELF_SIGNED=true' \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 In this configuration, any requests made over the plain http protocol will automatically be redirected to use the https protocol. However, this is not optimal when using a load balancer.
@@ -530,7 +531,7 @@ docker run --name gitlab -d \
  --env 'GITLAB_HTTPS=true' --env 'SSL_SELF_SIGNED=true' \
  --env 'NGINX_HSTS_MAXAGE=2592000' \
  --volume /srv/docker/gitlab/gitlab:/home/git/data \
- sameersbn/gitlab:16.10.0
+ sameersbn/gitlab:16.10.2
 ```
 
 If you want to completely disable HSTS set `NGINX_HSTS_ENABLED` to `false`.
@@ -553,7 +554,7 @@ docker run --name gitlab -d \
     --env 'GITLAB_SSH_PORT=10022' --env 'GITLAB_PORT=443' \
     --env 'GITLAB_HTTPS=true' --env 'SSL_SELF_SIGNED=true' \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 Again, drop the `--env 'SSL_SELF_SIGNED=true'` option if you are using CA certified SSL certificates.
@@ -601,7 +602,7 @@ Let's assume we want to deploy our application to '/git'. GitLab needs to know t
 docker run --name gitlab -it --rm \
     --env 'GITLAB_RELATIVE_URL_ROOT=/git' \
     --volume /srv/docker/gitlab/gitlab:/home/git/data \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 GitLab will now be accessible at the `/git` path, e.g. `http://www.example.com/git`.
@@ -783,14 +784,14 @@ Also the container processes seem to be executed as the host's user/group `1000`
 ```bash
 docker run --name gitlab -it --rm [options] \
     --env "USERMAP_UID=$(id -u git)" --env "USERMAP_GID=$(id -g git)" \
-    sameersbn/gitlab:16.10.0
+    sameersbn/gitlab:16.10.2
 ```
 
 When changing this mapping, all files and directories in the mounted data volume `/home/git/data` have to be re-owned by the new ids. This can be achieved automatically using the following command:
 
 ```bash
 docker run --name gitlab -d [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:sanitize
+    sameersbn/gitlab:16.10.2 app:sanitize
 ```
 
 #### Piwik
@@ -800,6 +801,52 @@ These options should contain something like:
 
 - `PIWIK_URL=piwik.example.org`
 - `PIWIK_SITE_ID=42`
+
+#### Feature flags
+
+In this section, we talk about feature flags that administrators can change the state (See <https://docs.gitlab.com/ee/administration/feature_flags.html>). If you are looking for documentation for "Feature flags" that configured on project deploy settings, see <https://docs.gitlab.com/ee/operations/feature_flags.html>
+
+GitLab adopted feature flags strategies to deploy features in an early stage of development so that they can be incrementally rolled out. GitLab administrators with access to the [Rails console](https://docs.gitlab.com/ee/administration/feature_flags.html#how-to-enable-and-disable-features-behind-flags) or the [Feature flags API](https://docs.gitlab.com/ee/api/features.html) can control them (note that `sameersbn/gitlab` is a container image that provides GitLab installations from the source).  
+You can see all feature flags in GitLab at corresponding version of documentation: <https://docs.gitlab.com/ee/user/feature_flags.html>  
+
+For `sameersbn/gitlab`, you can control them via environment parameter [`GITLAB_FEATURE_FLAGS_DISABLE_TARGETS`](#gitlab_feature_flags_disable_targets) and [`GITLAB_FEATURE_FLAGS_ENABLE_TARGETS`](#gitlab_feature_flags_enable_targets) in addition to the above methods.  
+This image searches yml files in [`${GITLAB_INSTALL_DIR}/config/feature_flags`](https://gitlab.com/gitlab-org/gitlab-foss/-/tree/master/config/feature_flags) (typically `/home/git/gitlab/config/feature_flags/`) recursively and use the file list as a source of active feature flags.
+
+Here is a part of example `docker-compose.yml`:
+
+````yml
+services:
+  gitlab:
+    image: sameersbn/gitlab:latest
+    environment:
+    - GITLAB_FEATURE_FLAGS_DISABLE_TARGETS=auto_devops_banner_disabled,ci_enable_live_trace
+    - GITLAB_FEATURE_FLAGS_ENABLE_TARGETS=git_push_create_all_pipelines,build_service_proxy
+````
+
+Once the container up, you can see following messages in container log like below.  
+
+````sh
+...
+Configuring gitlab::feature_flags...
+- specified feature flags: {:to_be_disabled=>["auto_devops_banner_disabled", "ci_enable_live_trace"], :to_be_enabled=>["git_push_create_all_pipelines", "build_service_proxy"]}
+- auto_devops_banner_disabled : off
+- ci_enable_live_trace : off
+- git_push_create_all_pipelines : on
+- build_service_proxy : on
+...
+````
+
+If specified flag names are not included in the list, they will be ignored and appears to container log like below:
+
+````sh
+...
+Configuring gitlab::feature_flags...
+- specified feature flags: {:to_be_disabled=>["auto_devops_banner_disabled", "invalid_flag_name"], :to_be_enabled=>["git_push_create_all_pipelines", "another_invalid_flag_name"]}
+- Following flags are probably invalid and have been ignored: invalid_flag_name,another_invalid_flag_name
+- auto_devops_banner_disabled : off
+- git_push_create_all_pipelines : on
+...
+````
 
 #### Available Configuration Parameters
 
@@ -1618,6 +1665,17 @@ The value of the `worker-src` directive in the `Content-Security-Policy` header.
 ##### `GITLAB_CONTENT_SECURITY_POLICY_DIRECTIVES_REPORT_URI`
 
 The value of the `report-uri` directive in the `Content-Security-Policy` header
+
+##### `GITLAB_FEATURE_FLAGS_DISABLE_TARGETS`
+
+Comma separated list of feature flag names to be disabled. No whitespace is allowed.  
+You can see all feature flags in GitLab at corresponding version of documentation: <https://docs.gitlab.com/ee/user/feature_flags.html>  
+Feature flags name and its statement will be appear to container log. Note that some of the feature flags are implicitly enabled or disabled by GitLab itself, and are not appear to container log.  
+No defaults.
+
+##### `GITLAB_FEATURE_FLAGS_ENABLE_TARGETS`
+
+This parameter is the same as [`GITLAB_FEATURE_FLAGS_DISABLE_TARGETS`](#gitlab_feature_flags_enable_targets), except its purpose is to enable the feature flag. No defaults.
 
 ##### `SSL_SELF_SIGNED`
 
@@ -2472,7 +2530,7 @@ Execute the rake task to create a backup.
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:rake gitlab:backup:create
+    sameersbn/gitlab:16.10.2 app:rake gitlab:backup:create
 ```
 
 A backup will be created in the backups folder of the [Data Store](#data-store). You can change the location of the backups using the `GITLAB_BACKUP_DIR` configuration parameter.
@@ -2507,14 +2565,14 @@ you need to prepare the database:
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:rake db:setup
+    sameersbn/gitlab:16.10.2 app:rake db:setup
 ```
 
 Execute the rake task to restore a backup. Make sure you run the container in interactive mode `-it`.
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:rake gitlab:backup:restore
+    sameersbn/gitlab:16.10.2 app:rake gitlab:backup:restore
 ```
 
 The list of all available backups will be displayed in reverse chronological order. Select the backup you want to restore and continue.
@@ -2523,7 +2581,7 @@ To avoid user interaction in the restore operation, specify the timestamp, date 
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:rake gitlab:backup:restore BACKUP=1515629493_2020_12_06_13.0.6
+    sameersbn/gitlab:16.10.2 app:rake gitlab:backup:restore BACKUP=1515629493_2020_12_06_13.0.6
 ```
 
 When using `docker-compose` you may use the following command to execute the restore.
@@ -2572,7 +2630,7 @@ The `app:rake` command allows you to run gitlab rake tasks. To run a rake task s
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:rake gitlab:env:info
+    sameersbn/gitlab:16.10.2 app:rake gitlab:env:info
 ```
 
 You can also use `docker exec` to run raketasks on running gitlab instance. For example,
@@ -2585,7 +2643,7 @@ Similarly, to import bare repositories into GitLab project instance
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:rake gitlab:import:repos
+    sameersbn/gitlab:16.10.2 app:rake gitlab:import:repos
 ```
 
 Or
@@ -2616,7 +2674,7 @@ Copy all the **bare** git repositories to the `repositories/` directory of the [
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:16.10.0 app:rake gitlab:import:repos
+    sameersbn/gitlab:16.10.2 app:rake gitlab:import:repos
 ```
 
 Watch the logs and your repositories should be available into your new gitlab container.
@@ -2640,12 +2698,12 @@ To upgrade to newer gitlab releases, simply follow this 4 step upgrade procedure
 
 > **Note**
 >
-> Upgrading to `sameersbn/gitlab:16.10.0` from `sameersbn/gitlab:7.x.x` can cause issues. It is therefore required that you first upgrade to `sameersbn/gitlab:8.0.5-1` before upgrading to `sameersbn/gitlab:8.1.0` or higher.
+> Upgrading to `sameersbn/gitlab:16.10.2` from `sameersbn/gitlab:7.x.x` can cause issues. It is therefore required that you first upgrade to `sameersbn/gitlab:8.0.5-1` before upgrading to `sameersbn/gitlab:8.1.0` or higher.
 
 - **Step 1**: Update the docker image.
 
 ```bash
-docker pull sameersbn/gitlab:16.10.0
+docker pull sameersbn/gitlab:16.10.2
 ```
 
 - **Step 2**: Stop and remove the currently running image
@@ -2670,7 +2728,7 @@ Replace `x.x.x` with the version you are upgrading from. For example, if you are
 > **Note**: Since GitLab `8.11.0` you need to provide the `GITLAB_SECRETS_SECRET_KEY_BASE` and `GITLAB_SECRETS_OTP_KEY_BASE` parameters while starting the image. These should initially both have the same value as the contents of the `/home/git/data/.secret` file. See [Available Configuration Parameters](#available-configuration-parameters) for more information on these parameters.
 
 ```bash
-docker run --name gitlab -d [OPTIONS] sameersbn/gitlab:16.10.0
+docker run --name gitlab -d [OPTIONS] sameersbn/gitlab:16.10.2
 ```
 
 ### Shell Access
@@ -2708,7 +2766,7 @@ version: '2.3'
 
 services:
   gitlab:
-    image: sameersbn/gitlab:16.10.0
+    image: sameersbn/gitlab:16.10.2
     healthcheck:
       test: ["CMD", "/usr/local/sbin/healthcheck"]
       interval: 1m
