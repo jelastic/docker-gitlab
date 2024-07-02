@@ -22,7 +22,7 @@ services:
 
   gitlab:
     restart: always
-    image: sameersbn/gitlab:17.0.0
+    image: sameersbn/gitlab:17.1.1
     volumes:
     - gitlab-data:/home/git/data:Z
     - gitlab-logs:/var/log/gitlab
@@ -58,6 +58,7 @@ services:
     - GITLAB_SECRETS_DB_KEY_BASE=secret
     - GITLAB_SECRETS_SECRET_KEY_BASE=secret
     - GITLAB_SECRETS_OTP_KEY_BASE=secret
+    - GITLAB_SECRETS_ENCRYPTED_SETTINGS_KEY_BASE=secret
 
     - GITLAB_REGISTRY_ENABLED=true
     - GITLAB_REGISTRY_HOST=registry.example.com

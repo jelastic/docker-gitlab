@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: gitlab
-        image: sameersbn/gitlab:17.0.0
+        image: sameersbn/gitlab:17.1.1
         env:
         - name: TZ
           value: Asia/Kolkata
@@ -26,6 +26,8 @@ spec:
         - name: GITLAB_SECRETS_SECRET_KEY_BASE
           value: long-and-random-alpha-numeric-string
         - name: GITLAB_SECRETS_OTP_KEY_BASE
+          value: long-and-random-alpha-numeric-string
+        - name: GITLAB_SECRETS_ENCRYPTED_SETTINGS_KEY_BASE
           value: long-and-random-alpha-numeric-string
 
         - name: GITLAB_ROOT_PASSWORD
