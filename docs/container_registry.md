@@ -36,7 +36,7 @@ the GitLab installation and the registry are:
 
 GitLab needs a certificate ("auth token") to talk to the registry API. The
 tokens must be provided in the `/certs` directory of your container. You could
-use an existing domain ceritificate or create your own with a very long
+use an existing domain certificate or create your own with a very long
 lifetime like this:
 
 ```bash
@@ -224,7 +224,7 @@ Read more about the individual driver's config options in the
 > **Warning** GitLab will not backup Docker images that are not stored on the filesystem. Remember to enable backups with your object storage provider if desired.
 >
 > If you use **filesystem** as storage driver you need to mount the path from `GITLAB_REGISTRY_DIR` of the GitLab container in the registry container. So both container can access the registry data.
-> If you don't change `GITLAB_REGISTRY_DIR` you will find your registry data in the mounted volume from the GitLab Container under `./gitlab/shared/registry`. This don't need to be seprated mounted because `./gitlab` is already mounted in the GitLab Container. If it will be mounted seperated the whole restoring proccess of GitLab backup won't work because gitlab try to create an folder under `./gitlab/shared/registry` /`GITLAB_REGISTRY_DIR` and GitLab can't delete/remove the mount point inside the container so the restoring process of the backup will fail.
+> If you don't change `GITLAB_REGISTRY_DIR` you will find your registry data in the mounted volume from the GitLab Container under `./gitlab/shared/registry`. This don't need to be separated mounted because `./gitlab` is already mounted in the GitLab Container. If it will be mounted separated the whole restoring process of GitLab backup won't work because gitlab try to create an folder under `./gitlab/shared/registry` /`GITLAB_REGISTRY_DIR` and GitLab can't delete/remove the mount point inside the container so the restoring process of the backup will fail.
 > An example how it works is in the `docker-compose`.
 
 ### Example for Amazon Simple Storage Service (s3)
@@ -265,7 +265,7 @@ storage:
     - REGISTRY_STORAGE_DELETE_ENABLED=true
 ```
 
-Generaly for more information about the configuration of the registry container you can find it under [registry configuration](https://docs.docker.com/registry/configuration).
+Generally for more information about the configuration of the registry container you can find it under [registry configuration](https://docs.docker.com/registry/configuration).
 
 
 ## Storage limitations
@@ -289,7 +289,7 @@ docker stop registry gitlab && docker rm registry gitlab
 Execute the rake task with a removeable container.
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:17.1.1 app:rake gitlab:backup:create
+    sameersbn/gitlab:17.2.1 app:rake gitlab:backup:create
 ```
 ## Restoring Backups
 
@@ -305,7 +305,7 @@ Execute the rake task to restore a backup. Make sure you run the container in in
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:17.1.1 app:rake gitlab:backup:restore
+    sameersbn/gitlab:17.2.1 app:rake gitlab:backup:restore
 ```
 
 The list of all available backups will be displayed in reverse chronological order. Select the backup you want to restore and continue.
@@ -314,7 +314,7 @@ To avoid user interaction in the restore operation, specify the timestamp of the
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:17.1.1 app:rake gitlab:backup:restore BACKUP=1417624827
+    sameersbn/gitlab:17.2.1 app:rake gitlab:backup:restore BACKUP=1417624827
 ```
 
 # Upgrading from an existing GitLab installation
@@ -325,7 +325,7 @@ If you want enable this feature for an existing instance of GitLab you need to d
 - **Step 1**: Update the docker image.
 
 ```bash
-docker pull sameersbn/gitlab:17.1.1
+docker pull sameersbn/gitlab:17.2.1
 ```
 
 - **Step 2**: Stop and remove the currently running image
@@ -378,7 +378,7 @@ docker run --name gitlab -d [PREVIOUS_OPTIONS] \
 --env 'GITLAB_REGISTRY_CERT_PATH=/certs/registry-auth.crt' \
 --env 'GITLAB_REGISTRY_KEY_PATH=/certs/registry-auth.key' \
 --link registry:registry
-sameersbn/gitlab:17.1.1
+sameersbn/gitlab:17.2.1
 ```
 
 
