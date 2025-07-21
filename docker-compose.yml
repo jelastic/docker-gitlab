@@ -1,4 +1,3 @@
-
 services:
   redis:
     restart: always
@@ -18,6 +17,28 @@ services:
     - DB_PASS=${DB_PASSWORD}
     - DB_NAME=gitlabhq_production
     - DB_EXTENSION=pg_trgm,btree_gist
+
+  registry:
+    restart: always
+    image: registry:2
+    ports:
+    - "${REGISTRY_PORT}:5000"
+    volumes:
+    - /srv/docker/gitlab/gitlab/shared/registry:/registry
+    - /srv/docker/gitlab/certs:/certs
+    environment:
+    - REGISTRY_LOG_LEVEL=info
+    - REGISTRY_AUTH_TOKEN_REALM=https://${GITLAB_HOST}:${HTTPS_PORT}/jwt/auth
+    - REGISTRY_AUTH_TOKEN_SERVICE=container_registry
+    - REGISTRY_AUTH_TOKEN_ISSUER=gitlab-issuer
+    - REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/auth.crt
+
+    - REGISTRY_HTTP_SECRET=${HTTP_SECRET}
+    - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/auth.crt
+    - REGISTRY_HTTP_TLS_KEY=/certs/auth.key
+
+    - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/registry
+    - REGISTRY_STORAGE_DELETE_ENABLED=true
 
   gitlab:
     restart: always
