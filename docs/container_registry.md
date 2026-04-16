@@ -65,11 +65,18 @@ creation. This information is not used at all.
 
 #### Update docker-compose.yml
 
+> [!important]
+> Docker Registry v3 is currently not compatible with the JWT tokens signed by GitLab.
+> The example below uses `registry:2` to avoid issues in validating the token.
+> 
+> Alternatively, you can generate a JWKS file and specify it as `REGISTRY_AUTH_TOKEN_JWKS`
+> to run `registry:latest`. Further information can be found [here](https://github.com/cesanta/docker_auth/issues/386).
+
 First add the configuration for the registry container to your `docker-compose.yml`.
 
 ```yaml
     registry:
-        image: registry
+        image: registry:2
         restart: always
         expose:
             - "5000"
@@ -251,7 +258,7 @@ storage:
  ...
  registry:
     restart: always
-    image: registry:2.4.1
+    image: registry:2.8.3
     volumes:
      - ./certs:/certs
     environment:
@@ -291,7 +298,7 @@ Execute the rake task with a removeable container.
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:18.3.2 app:rake gitlab:backup:create
+    sameersbn/gitlab:18.10.3 app:rake gitlab:backup:create
 ```
 
 ### Restoring Backups
@@ -308,7 +315,7 @@ Execute the rake task to restore a backup. Make sure you run the container in in
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:18.3.2 app:rake gitlab:backup:restore
+    sameersbn/gitlab:18.10.3 app:rake gitlab:backup:restore
 ```
 
 The list of all available backups will be displayed in reverse chronological order. Select the backup you want to restore and continue.
@@ -317,7 +324,7 @@ To avoid user interaction in the restore operation, specify the timestamp of the
 
 ```bash
 docker run --name gitlab -it --rm [OPTIONS] \
-    sameersbn/gitlab:18.3.2 app:rake gitlab:backup:restore BACKUP=1417624827
+    sameersbn/gitlab:18.10.3 app:rake gitlab:backup:restore BACKUP=1417624827
 ```
 
 ## Upgrading from an existing GitLab installation
@@ -327,7 +334,7 @@ If you want enable this feature for an existing instance of GitLab you need to d
 - **Step 1**: Update the docker image.
 
 ```bash
-docker pull sameersbn/gitlab:18.3.2
+docker pull sameersbn/gitlab:18.10.3
 ```
 
 - **Step 2**: Stop and remove the currently running image
@@ -365,7 +372,7 @@ docker run --name registry -d \
 --env 'REGISTRY_AUTH_TOKEN_ISSUER=gitlab-issuer' \
 --env 'REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE=/certs/registry-auth.crt' \
 --env 'REGISTRY_STORAGE_DELETE_ENABLED=true' \
-registry:2.4.1
+registry:2.8.3
 ```
 
 - **Step 6**: Start the image
@@ -381,7 +388,7 @@ docker run --name gitlab -d [PREVIOUS_OPTIONS] \
 --env 'GITLAB_REGISTRY_CERT_PATH=/certs/registry-auth.crt' \
 --env 'GITLAB_REGISTRY_KEY_PATH=/certs/registry-auth.key' \
 --link registry:registry
-sameersbn/gitlab:18.3.2
+sameersbn/gitlab:18.10.3
 ```
 
 [storage-config]: https://docs.docker.com/registry/configuration/#storage

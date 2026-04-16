@@ -110,7 +110,7 @@ gem install bundler:"${BUNDLER_VERSION}"
 
 # download golang
 echo "Downloading Go ${GOLANG_VERSION}..."
-wget -cnv https://storage.googleapis.com/golang/go${GOLANG_VERSION}.linux-amd64.tar.gz -P ${GITLAB_BUILD_DIR}/
+wget -cnv https://go.dev/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz -P ${GITLAB_BUILD_DIR}/
 tar -xf ${GITLAB_BUILD_DIR}/go${GOLANG_VERSION}.linux-amd64.tar.gz -C /tmp/
 
 # install gitlab-shell
@@ -354,7 +354,6 @@ command=bundle exec puma --config ${GITLAB_INSTALL_DIR}/config/puma.rb --environ
 user=git
 autostart=true
 autorestart=true
-stopsignal=QUIT
 stdout_logfile=${GITLAB_LOG_DIR}/supervisor/%(program_name)s.log
 stderr_logfile=${GITLAB_LOG_DIR}/supervisor/%(program_name)s.log
 EOF

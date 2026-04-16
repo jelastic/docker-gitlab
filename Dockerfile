@@ -1,15 +1,15 @@
-FROM ubuntu:noble-20250805
+FROM ubuntu:noble-20260324
 
-ARG VERSION=18.3.2
+ARG VERSION=18.10.3
 
 ENV GITLAB_VERSION=${VERSION} \
-    RUBY_VERSION=3.2.9 \
-    RUBY_SOURCE_SHA256SUM="abbad98db9aeb152773b0d35868e50003b8c467f3d06152577c4dfed9d88ed2a" \
-    RUBYGEMS_VERSION=3.7.2 \
-    GOLANG_VERSION=1.24.7 \
-    GITLAB_SHELL_VERSION=14.45.2 \
-    GITLAB_PAGES_VERSION=18.3.2 \
-    GITALY_SERVER_VERSION=18.3.2 \
+    RUBY_VERSION=3.3.11 \
+    RUBY_SOURCE_SHA256SUM="59f0fafb1a59a05dc3765117af3fa68e153eb48254708549f321c1e9e078d7a0" \
+    RUBYGEMS_VERSION=4.0.10 \
+    GOLANG_VERSION=1.25.9 \
+    GITLAB_SHELL_VERSION=14.47.0 \
+    GITLAB_PAGES_VERSION=18.10.3 \
+    GITALY_SERVER_VERSION=18.10.3 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
@@ -48,7 +48,8 @@ RUN set -ex && \
  && apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
       sudo supervisor logrotate locales curl \
-      nginx openssh-server postgresql-contrib redis-tools \
+      meson \
+      nginx openssh-server redis-tools \
       postgresql-client-13 postgresql-client-14 postgresql-client-15 postgresql-client-16 postgresql-client-17 \
       python3 python3-docutils nodejs yarn gettext-base graphicsmagick \
       libpq5 zlib1g libyaml-dev libssl-dev libgdbm-dev libre2-dev \

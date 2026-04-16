@@ -3,6 +3,166 @@
 This file only reflects the changes that are made in this image. Please refer to the upstream GitLab [CHANGELOG](https://
 gitlab.com/gitlab-org/gitlab-foss/blob/master/CHANGELOG.md) for the list of changes in GitLab.
 
+## 18.10.3
+
+- gitlab: upgrade CE to v18.10.3
+- gitaly: upgrade to v18.10.3
+- gitlab-pages: upgrade to v18.10.3
+- golang: upgrade to v1.25.9
+- ruby: upgrade to v3.2.11
+- rubygems: upgrade to v4.0.10
+- ubuntu: upgrade to noble-20260324
+
+## 18.10.1
+
+- gitlab: upgrade CE to v18.10.1
+- gitaly: upgrade to v18.10.1
+- gitlab-pages: upgrade to v18.10.1
+
+## 18.10.0
+
+- gitlab: upgrade CE to v18.10.0
+- gitaly: upgrade to v18.10.0
+- gitlab-pages: upgrade to v18.10.0
+- gitlab-shell: upgrade to v14.47.0
+- rubygems: upgrade to v4.0.9
+- ubuntu: upgrade to noble-20260217
+
+## 18.9.2
+
+- gitlab: upgrade CE to v18.9.2
+- gitaly: upgrade to v18.9.2
+- gitlab-pages: upgrade to v18.9.2
+- golang: upgrade to v1.25.8
+- rubygems: upgrade to v4.0.8
+
+## 18.9.1
+
+- gitlab: upgrade CE to v18.9.1
+- gitaly: upgrade to v18.9.1
+- gitlab-pages: upgrade to v18.9.1
+
+## 18.9.0
+
+- gitlab: upgrade CE to v18.9.0
+- gitaly: upgrade to v18.9.0
+- gitlab-pages: upgrade to v18.9.0
+- gitlab-shell: upgrade to v14.45.6
+- ruby: upgrade to v3.3.10
+- ubuntu: upgrade to noble-20260210.1
+
+## 18.8.4
+
+- gitlab: upgrade CE to v18.8.4
+- gitaly: upgrade to v18.8.4
+- gitlab-pages: upgrade to v18.8.4
+- golang: upgrade to v1.25.7
+- rubygems: upgrade to v4.0.6
+
+## 18.8.3
+
+- gitlab: upgrade CE to v18.8.3
+- gitaly: upgrade to v18.8.3
+- gitlab-pages: upgrade to v18.8.3
+
+## 18.8.2
+
+- gitlab: upgrade CE to v18.8.2
+- gitaly: upgrade to v18.8.2
+- gitlab-pages: upgrade to v18.8.2
+
+## 18.8.1
+
+- gitlab: upgrade CE to v18.8.1
+- gitaly: upgrade to v18.8.1
+- gitlab-pages: upgrade to v18.8.1
+
+## 18.8.0
+
+- gitlab: upgrade CE to v18.8.0
+- gitaly: upgrade to v18.8.0
+- gitlab-pages: upgrade to v18.8.0
+- golang: upgrade to v1.24.12
+- ruby: upgrade to v3.2.10
+- ubuntu: upgrade to noble-20260113
+
+## 18.7.1
+
+- gitlab: upgrade CE to v18.7.1
+- gitaly: upgrade to v18.7.1
+- gitlab-pages: upgrade to v18.7.1
+
+## 18.7.0
+
+- gitlab: upgrade CE to v18.7.0
+- gitaly: upgrade to v18.7.0
+- gitlab-pages: upgrade to v18.7.0
+- gitlab-shell: upgrade to v14.45.5
+
+## 18.6.2
+
+- gitlab: upgrade CE to v18.6.2
+- gitaly: upgrade to v18.6.2
+- gitlab-pages: upgrade to v18.6.2
+- golang: upgrade to v1.24.11
+
+## 18.6.1
+
+- gitlab: upgrade CE to v18.6.1
+- gitaly: upgrade to v18.6.1
+- gitlab-pages: upgrade to v18.6.1
+
+## 18.6.0
+
+- gitlab: upgrade CE to v18.6.0
+- gitaly: upgrade to v18.6.0
+- gitlab-pages: upgrade to v18.6.0
+- ubuntu: upgrade to noble-20251013
+
+## 18.5.2
+
+- gitlab: upgrade CE to v18.5.2
+- gitaly: upgrade to v18.5.2
+- gitlab-pages: upgrade to v18.5.2
+- golang: upgrade to v1.24.10
+
+## 18.5.1
+
+- gitlab: upgrade CE to v18.5.1
+- gitaly: upgrade to v18.5.1
+- gitlab-pages: upgrade to v18.5.1
+
+## 18.5.0
+
+- gitlab: upgrade CE to v18.5.0
+- gitaly: upgrade to v18.5.0
+- gitlab-pages: upgrade to v18.5.0
+- gitlab-shell: upgrade to v14.45.3
+- golang: upgrade to v1.24.9
+- ubuntu: upgrade to noble-20251001
+
+## 18.4.2
+
+- gitlab: upgrade CE to v18.4.2
+- gitaly: upgrade to v18.4.2
+- gitlab-pages: upgrade to v18.4.2
+- golang: upgrade to v1.24.8
+- ubuntu: upgrade to noble-20250925
+
+## 18.4.1
+
+- gitlab: upgrade CE to v18.4.1
+- gitaly: upgrade to v18.4.1
+- gitlab-pages: upgrade to v18.4.1
+- ubuntu: upgrade to noble-20250910
+
+## 18.4.0
+
+- gitlab: upgrade CE to v18.4.0
+- gitaly: upgrade to v18.4.0
+- gitlab-pages: upgrade to v18.4.0
+- ubuntu: upgrade to noble-20250910
+
 ## 18.3.2
 
 - gitlab: upgrade CE to v18.3.2
