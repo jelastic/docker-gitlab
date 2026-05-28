@@ -1,22 +1,25 @@
 FROM ubuntu:noble-20260410
 
-ARG VERSION=18.11.3
+ARG VERSION=19.0.1
 
 ENV GITLAB_VERSION=${VERSION} \
     RUBY_VERSION=3.3.11 \
     RUBY_SOURCE_SHA256SUM="59f0fafb1a59a05dc3765117af3fa68e153eb48254708549f321c1e9e078d7a0" \
-    RUBYGEMS_VERSION=4.0.11 \
+    RUBYGEMS_VERSION=4.0.12 \
     GOLANG_VERSION=1.26.3 \
-    GITLAB_SHELL_VERSION=14.49.0 \
-    GITLAB_PAGES_VERSION=18.11.3 \
-    GITALY_SERVER_VERSION=18.11.3 \
+    GITLAB_SHELL_VERSION=14.51.0 \
+    GITLAB_PAGES_VERSION=19.0.1 \
+    GITALY_SERVER_VERSION=19.0.1 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
     GITLAB_CACHE_DIR="/etc/docker-gitlab" \
     RAILS_ENV=production \
     NODE_ENV=production \
-    NO_SOURCEMAPS=true
+    NO_SOURCEMAPS=true \
+    # v19.x : minimum = 17.0, maximum = 17.x (currently 17.10, is 170010)
+    POSTGRESQL_SERVER_REQUIRED_VERSION_MINIMUM=170000 \
+    POSTGRESQL_SERVER_TESTED_VERSION_MAXIMUM=170010
 
 ENV GITLAB_INSTALL_DIR="${GITLAB_HOME}/gitlab" \
     GITLAB_SHELL_INSTALL_DIR="${GITLAB_HOME}/gitlab-shell" \
@@ -50,7 +53,7 @@ RUN set -ex && \
       sudo supervisor logrotate locales curl \
       meson \
       nginx openssh-server redis-tools \
-      postgresql-client-13 postgresql-client-14 postgresql-client-15 postgresql-client-16 postgresql-client-17 \
+      postgresql-client-17 postgresql-client-18 \
       python3 python3-docutils nodejs yarn gettext-base graphicsmagick \
       libpq5 zlib1g libyaml-dev libssl-dev libgdbm-dev libre2-dev \
       libreadline-dev libncurses5-dev libffi-dev curl openssh-server libxml2-dev libxslt-dev \
