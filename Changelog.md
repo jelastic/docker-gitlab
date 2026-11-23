@@ -3,6 +3,116 @@
 This file only reflects the changes that are made in this image. Please refer to the upstream GitLab [CHANGELOG](https://
 gitlab.com/gitlab-org/gitlab-foss/blob/master/CHANGELOG.md) for the list of changes in GitLab.
 
+## 19.6.1
+
+- gitlab: upgrade CE to v19.6.1
+- gitaly: upgrade to v19.6.1
+- gitlab-pages: upgrade to v19.6.1
+
+## 19.6.0
+
+- gitlab: upgrade CE to v19.6.0
+- gitaly: upgrade to v19.6.0
+- gitlab-pages: upgrade to v19.6.0
+- gitlab-shell: upgrade to v14.61.0
+- rubygems: upgrade to v4.1.0
+- ruby: upgrade to v3.3.14
+- ubuntu: upgrade to noble-20261110.1
+
+## 19.5.6
+
+- gitlab: upgrade CE to v19.5.6
+- gitaly: upgrade to v19.5.6
+- gitlab-pages: upgrade to v19.5.6
+
+## 19.5.5
+
+- gitlab: upgrade CE to v19.5.5
+- gitaly: upgrade to v19.5.5
+- gitlab-pages: upgrade to v19.5.5
+- ubuntu: upgrade to noble-20261110
+
+## 19.5.4
+
+- gitlab: upgrade CE to v19.5.4
+- gitaly: upgrade to v19.5.4
+- gitlab-pages: upgrade to v19.5.4
+- golang: upgrade to v1.27.4
+- rubygems: upgrade to v4.0.24
+
+## 19.5.3
+
+- gitlab: upgrade CE to v19.5.3
+- gitaly: upgrade to v19.5.3
+- gitlab-pages: upgrade to v19.5.3
+- ruby: upgrade to v3.3.13
+- ruby: remove regexp overflow security patches for CVE-2026-110264
+- golang: upgrade to v1.27.3
+- ubuntu: upgrade to noble-20261024.1
+
+## 19.5.1
+
+- gitlab: upgrade CE to v19.5.1
+- gitaly: upgrade to v19.5.1
+- gitlab-pages: upgrade to v19.5.1
+- ruby: apply regexp overflow security patches for CVE-2026-110264
+
+## 19.5.0
+
+- gitlab: upgrade CE to v19.5.0
+- gitaly: upgrade to v19.5.0
+- gitlab-pages: upgrade to v19.5.0
+- gitlab-shell: upgrade to v14.58.0
+- golang: upgrade to v1.27.2
+- rubygems: upgrade to v4.0.23
+
+## 19.4.2
+
+- gitlab: upgrade CE to v19.4.2
+- gitaly: upgrade to v19.4.2
+- gitlab-pages: upgrade to v19.4.2
+
+## 19.4.1
+
+- gitlab: upgrade CE to v19.4.1
+- gitaly: upgrade to v19.4.1
+- gitlab-pages: upgrade to v19.4.1
+
+## 19.4.0
+
+- gitlab: upgrade CE to v19.4.0
+- gitaly: upgrade to v19.4.0
+- gitlab-pages: upgrade to v19.4.0
+- gitlab-shell: upgrade to v14.57.3
+- golang: upgrade to v1.27.1
+- rubygems: upgrade to v4.0.21
+- ubuntu: upgrade to noble-20260911
+
+## 19.3.2
+
+- gitlab: upgrade CE to v19.3.2
+- gitaly: upgrade to v19.3.2
+- gitlab-pages: upgrade to v19.3.2
+- golang: upgrade to v1.26.8
+- rubygems: upgrade to v4.0.20
+- ubuntu: upgrade to 20260905
+
+## 19.3.1
+
+- gitlab: upgrade CE to v19.3.1
+- gitaly: upgrade to v19.3.1
+- gitlab-pages: upgrade to v19.3.1
+
+## 19.3.0
+
+- gitlab: upgrade CE to v19.3.0
+- gitaly: upgrade to v19.3.0
+- gitlab-pages: upgrade to v19.3.0
+- golang: upgrade to v1.26.7
+- rubygems: upgrade to v4.0.19
+- ubuntu: upgrade to 20260810
+- postgresql: add PG_PARAM_MAX_LOCKS_PER_TRANSACTION
+
 ## 19.2.4
 
 - gitlab: upgrade CE to v19.2.4

@@ -1769,6 +1769,11 @@ initialize_datadir() {
   chmod u+rwX ${GITLAB_SHARED_DIR}
   chown ${GITLAB_USER}: ${GITLAB_SHARED_DIR}
 
+  # create ci_catalog_bundles dir
+  mkdir -p "${GITLAB_SHARED_DIR}/ci_catalog_bundles"
+  chmod u+rwX "${GITLAB_SHARED_DIR}/ci_catalog_bundles"
+  chown "${GITLAB_USER}:" "${GITLAB_SHARED_DIR}/ci_catalog_bundles"
+
   # create the ci_secure_files directory
   mkdir -p ${GITLAB_SHARED_DIR}/ci_secure_files
   chmod u+rwX ${GITLAB_SHARED_DIR}/ci_secure_files
@@ -1778,6 +1783,9 @@ initialize_datadir() {
   mkdir -p ${GITLAB_SHARED_DIR}/external-diffs
   chmod u+rwX ${GITLAB_SHARED_DIR}/external-diffs
   chown ${GITLAB_USER}: ${GITLAB_SHARED_DIR}/external-diffs
+
+  # create agent plan content directory required by GitLab backup
+  install -d -o ${GITLAB_USER} -g ${GITLAB_USER} -m 0700 ${GITLAB_SHARED_DIR}/agent_plan_content
 
   # create artifacts dir
   mkdir -p ${GITLAB_ARTIFACTS_DIR}
